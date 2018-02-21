@@ -1,0 +1,76 @@
+{
+	"variables": [],
+	"info": {
+		"name": "CECIL-SIMS-Core",
+		"_postman_id": "26aeab26-41b8-3ff6-2f13-20a4d1456d4c",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Person",
+			"description": "",
+			"item": [
+				{
+					"name": "Create Person",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Id not null\"] =  Boolean(jsonData.id);",
+									"",
+									"postman.setEnvironmentVariable(\"personId\", jsonData.id);",
+									" ",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{baseurl}}/api/v1/people",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\": \"Person X\",\n\t\"lastName\": \"TestData\", \n\t\"dateOfBirth\": \"01/01/1970\",\n\t\"age\": 40\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Person",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"id equal to the requested one\"] = jsonData.id === postman.getEnvironmentVariable(\"personId\"); "
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{baseurl}}/api/v1/people/{{personId}}",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
